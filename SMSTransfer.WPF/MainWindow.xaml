@@ -1,0 +1,89 @@
+﻿<Window   x:Class="SMSTransfer.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SMSTransfer.WPF"
+        mc:Ignorable="d"
+        Title="取码器" Height="450" Width="900"  >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DataGrid 
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Name="dgTasks"    
+            ItemsSource="{Binding  SmsTasks}" 
+            CanUserAddRows="False" 
+            AutoGenerateColumns="False"
+            SelectedItem="{Binding SelectedTask,Mode=TwoWay}"
+            IsSynchronizedWithCurrentItem="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="号码"  Binding="{Binding Tel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="150"/>
+                <DataGridTemplateColumn Header="操作" Width="80"  >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="获取号码" Name="btnGetTel" Click="BtnGetTel_Click" >
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding TaskStatus}" Value="Loading">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="短信内容"  Binding="{Binding Upcode}" Width="*"/>
+                <DataGridTextColumn Header="目标号码"  Binding="{Binding Upmobile}" Width="150"/>
+                <DataGridTemplateColumn Header="操作"  Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="发送zc" Name="btnSendMsg" Click="BtnSendMsg_Click" >
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding TaskStatus}" Value="ReadToGetTel">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding TaskStatus}" Value="Loading">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="结果" Binding="{Binding Msg,Mode=TwoWay}" Width="250"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5,5" Grid.ColumnSpan="2" >
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Margin" Value="0,0,5,0"/>
+                </Style>
+                <Style TargetType="{x:Type ComboBox}">
+                    <Setter Property="Margin" Value="0,0,15,0"/>
+                </Style>
+       
+            </StackPanel.Resources>
+            <TextBlock Text="密钥" VerticalAlignment="Center" Margin="5,0"/>
+            <TextBox  Text="{Binding UserKey}" Width="100" />
+            <TextBlock Text="地区选择" VerticalAlignment="Center" Margin="5,0"/>
+            <ComboBox Width="100" ItemsSource="{Binding Areas}" SelectedItem="{Binding AreaSelected}"  Text="选择地区" IsEditable="True" IsReadOnly="True"/>
+            <ComboBox Width="100" Text="选择城市" IsEditable="True" IsReadOnly="True" ItemsSource="{Binding Cities}" SelectedItem="{Binding CitySelected}"/>
+            <Button Name="btnNew" Click="BtnNew_Click" Content="新增" Width="100"/>
+        </StackPanel>
+    </Grid>
+</Window>

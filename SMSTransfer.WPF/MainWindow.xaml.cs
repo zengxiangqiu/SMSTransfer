@@ -44,10 +44,9 @@ namespace SMSTransfer.WPF
             this.Loaded += MainWindow_Loaded;
         }
 
-        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private  void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var vm = this.DataContext as MainViewModel;
-            vm.AreaWithCities = await service.GetAreasAsync();
+
         }
 
         private async void BtnGetTel_Click(object sender, RoutedEventArgs e)
@@ -99,6 +98,17 @@ namespace SMSTransfer.WPF
                 return;
             }
             vm.SmsTasks.Add(new SmsTask());
+        }
+
+        private async void TextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            var vm = this.DataContext as MainViewModel;
+            if (e.Key == Key.Enter)
+            {
+                Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+                vm.AreaWithCities = await service.GetAreasAsync(vm.UserKey);
+                Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
+            }
         }
     }
 }

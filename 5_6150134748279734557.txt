@@ -1,0 +1,21 @@
+﻿接口加密配置
+加密方式:AES/ECB/PKCS5Padding加密  ,无IV。  加密后转换为base64编码
+密    钥:dsgdfgdfhs111111
+加密参数格式:URL格式
+加密参数示例:appkey=XXX&projectId=XXX
+加密后参数:datachgfhfgjdfj=XXX(XXX为加密前参数加密后生成的密文)
+
+取号接口地址:http://114.55.242.118:8989/api/phone/getPhoneNumBySign
+取号接口加密前参数:appkey=用户秘钥,projectId=接口项目ID
+取号接口方式: GET
+
+发送短信接口地址:http://114.55.242.118:8989/api/phone/sendMsgBySign
+发送短信接口参数所需:appkey=用户秘钥,projectId=接口项目ID,tel=发送信息手机号,upcode=发送内容,upmobile=发送目标地址
+发送短信接口方式: POST
+
+标记号码接口地址:http://114.55.242.118:8989/api/phone/reloadTelBySign
+标记号码接口参数所需:appkey=用户秘钥,projectId=接口项目ID,tel=拉黑手机号,type=1时为近一个月注册过~type=2时为未收到验证码~type=3时为成功发送~type=4时为拉黑为辅助
+标记号码接口方式: POST
+
+接口返回值需解密,与加密方法一致
+接口返回值示例:{"code":100000,"msg","成功","data":"13811111111"}

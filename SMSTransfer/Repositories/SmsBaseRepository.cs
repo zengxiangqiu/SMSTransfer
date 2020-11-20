@@ -42,6 +42,25 @@ namespace SMSTransfer.Repositories
                 return log.Telephone;
         }
 
+        private async Task<string> AllowToSend(string tel, string userKey)
+        {
+            if (con.State != System.Data.ConnectionState.Open)
+                con.Open();
+
+            var area = await con.QueryFirstOrDefaultAsync<string>("SELECT AREA FROM SMSTELEPHONES  WHERE TEL.TELEPHONE = @TELEPHONE;", new { TELEPHONE = tel });
+
+
+            var areas = await con.QueryAsync<string>("SELECT PRO.AREAS  FROM SMSUserPermissions PER INNER JOIN SMSProjects PRO ON PER.PROJECTID = PRO.ID  INNER JOIN SMSUsers USER ON USER.ID =PER.USERID  AND  USER.USERKEY = @USERKEY;", new
+            {
+                USERKEY = userKey,
+            });
+            var areaAllow = areas.SelectMany(x => x.Split(','));
+            if (areaAllow.Contains(area))
+                return tel;
+            else
+                throw new Exception("已限制此密钥使用此号码");
+        }
+
 
         /// <summary>
         /// 发送短信接口
@@ -130,6 +149,6 @@ namespace SMSTransfer.Repositories
         Task<string> GetTelephoneAsync(string area, string city, string userKey);
         Task<string> GetTelephoneAsync(string tel, string userKey);
         Task SendMsgAsync(string tel, string upcode, string upmobile, string userKey);
-        Task<Dictionary<string, List<string>>> GetAreasWithCitiesAsync();
+        Task<Dictionary<string, List<string>>> GetAreasWithCitiesAsync(string userkey = "");
     }
 }

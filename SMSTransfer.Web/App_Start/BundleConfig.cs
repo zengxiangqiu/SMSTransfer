@@ -17,10 +17,20 @@ namespace SMSTransfer.Web
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap-sortable.js",
+                      "~/Scripts/moment.min.js",
+                      "~/Scripts/datatables.min.js",
+                      "~/Scripts/bootstrap-multiselect.js",
+                      "~/Scripts/bootstrap-switch.js"
+                      ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-sortable.css",
+                       "~/Content/bootstrap-switch/bootstrap3/bootstrap-switch.css",
+                       "~/Content/datatables.min.css",
+                       "~/Content/bootstrap-multiselect.css",
                       "~/Content/site.css"));
         }
     }

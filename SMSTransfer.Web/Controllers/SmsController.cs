@@ -33,10 +33,10 @@ namespace SMSTransfer.Web.Controllers
             return Ok(response);
         }
 
-        [Route("api/sms/areas")]
-        public async Task<IHttpActionResult> GetAreasAsync()
+        [Route("api/sms/areas/{id}")]
+        public async Task<IHttpActionResult> GetAreasAsync(string id)
         {
-            var response = await this._smsService.GetAreasWithCitiesAsync();
+            var response = await this._smsService.GetAreasWithCitiesAsync(id);
             return Ok(response);
         }
 

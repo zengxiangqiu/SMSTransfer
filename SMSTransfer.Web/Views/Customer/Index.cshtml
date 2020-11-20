@@ -1,0 +1,85 @@
+﻿@model SMSTransfer.Web.ViewModels.UsersViewModel
+@{
+    ViewBag.Title = "用户管理";
+}
+
+<h2>用户管理</h2>
+
+<br />
+
+<div class="row">
+    <div class="col-md-1">
+        <a href="~/customer/new">
+            <input type="button" value="新增用户" class="btn-primary btn-sm" />
+        </a>
+    </div>
+    <div class="col-md-1">
+        <a href="~/customer/rechargelog">
+            <input type="button" value="充值记录" class="btn-primary btn-sm" />
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="table-responsive">
+        <table id="example" class="display" style="width:100%">
+            @if (Model.Users.Count() == 0)
+            {
+                <tr>
+                    <td colspan="10">No Record's found.</td>
+                </tr>
+            }
+            else
+            {
+                <thead>
+                    <tr>
+                        <th> 用户ID</th>
+                        <th> 用户名</th>
+                        <th>密钥</th>
+                        <th>点数</th>
+                        <th>状态</th>
+                        <th>充值</th>
+                        <th>点数记录</th>
+                        @*<th data-firstsort="desc">Address</th>
+                            <th data-defaultsign="AZ">City</th>
+                            <th data-defaultsort="disabled">Country</th>*@
+                    </tr>
+                </thead>
+                foreach (var item in Model.Users)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.UserName</td>
+                        <td>@item.UserKey</td>
+                        <td>@item.Points</td>
+                        <td>
+                            @{
+                                if (item.Status == true)
+                                {
+                                    <span class="label label-success btn">已启用</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-danger">已停用</span>
+                                }
+                            }
+                        </td>
+                        <td> <a name="del0" class='btn btn-primary btn-sm' href="/customer/edit/@item.Id">充值</a></td>
+                        <td> <a name="del0" class='btn btn-primary btn-sm' href="/customer/log/@item.UserKey">点数记录</a></td>
+                        @*<td>@item.Address</td>
+                            <td>@item.City</td>
+                            <td>@item.Country</td>*@
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+}

@@ -1,0 +1,57 @@
+﻿@model SMSTransfer.Web.ViewModels.ProjectViewModel
+@{
+    ViewBag.Title = "项目管理";
+}
+
+<h2>项目管理</h2>
+
+<br />
+<div class="row">
+
+    <a href="~/project/edit">
+        <input type="button" value="新增项目" class="btn-primary btn-sm" />
+    </a>
+
+</div>
+<div class="row">
+    <div class="table-responsive">
+        <table id="example" class="display" style="width:100%">
+            @if (Model.Projects.Count() == 0)
+            {
+                <tr>
+                    <td colspan="10">No Record's found.</td>
+                </tr>
+            }
+            else
+            {
+                <thead>
+                    <tr>
+                        <th> 项目编号</th>
+                        <th> 项目名称</th>
+                        <th> 地区限制 </th>
+                        <th> 操作</th>
+                        @*<th data-firstsort="desc">Address</th>
+                            <th data-defaultsign="AZ">City</th>
+                            <th data-defaultsort="disabled">Country</th>*@
+                    </tr>
+                </thead>
+                foreach (var item in Model.Projects)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.ProjectName</td>
+                        <td>@item.Areas </td>
+                        <td> <a name="del0" class='btn btn-primary btn-sm' href="/project/edit/@item.Id">修改</a></td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+    @section scripts{
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+    }

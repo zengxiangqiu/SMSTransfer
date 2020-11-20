@@ -1,0 +1,48 @@
+﻿@model SMSTransfer.Web.ViewModels.PermissionViewModel
+@{
+    ViewBag.Title = "权限管理";
+}
+<h2>权限管理</h2>
+<br />
+<div class="row">
+    <div class="table-responsive">
+        <table id="example" class="display" style="width:100%">
+            @if (Model.Permissions.Count() == 0)
+            {
+                <tr>
+                    <td colspan="10">No Record's found.</td>
+                </tr>
+            }
+            else
+            {
+                <thead>
+                    <tr>
+                        <th>用户ID </th>
+                        <th> 用户名</th>
+                        <th> 项目编号</th>
+                        <th>操作</th>
+                        @*<th data-firstsort="desc">Address</th>
+                            <th data-defaultsign="AZ">City</th>
+                            <th data-defaultsort="disabled">Country</th>*@
+                    </tr>
+                </thead>
+                foreach (var item in Model.Permissions)
+                {
+                    <tr>
+                        <td>@item.UserId</td>
+                        <td>@item.UserName</td>
+                        <td>@item.Projects</td>
+                        <td> <a name="del0" class='btn btn-primary btn-sm' href="/permission/edit/@item.UserId">修改</a></td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+    @section scripts{
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+    }

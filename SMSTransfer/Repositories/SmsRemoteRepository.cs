@@ -20,7 +20,8 @@ namespace SMSTransfer.Repositories
            
         }
 
-        public Task<Dictionary<string, List<string>>> GetAreasWithCitiesAsync()
+
+        public Task<Dictionary<string, List<string>>> GetAreasWithCitiesAsync(string userkey = "")
         {
             throw new NotImplementedException();
         }

@@ -46,9 +46,9 @@ namespace SMSTransfer.WPF.Services
         /// 获取地区城市信息
         /// </summary>
         /// <returns></returns>
-        public async Task<Dictionary<string,List<string>>> GetAreasAsync()
+        public async Task<Dictionary<string,List<string>>> GetAreasAsync(string userKey)
         {
-            var request = new RestRequest("areas");
+            var request = new RestRequest($"areas/{userKey}");
 
             var response = await client.GetAsync<GetAreasResponse>(request);
 

@@ -20,7 +20,7 @@ namespace SMSTransfer.Repositories
             this._logger = logger;
         }
 
-        public async Task<Dictionary<string, List<string>>> GetAreasWithCitiesAsync()
+        public async Task<Dictionary<string, List<string>>> GetAreasWithCitiesAsync(string userkey ="")
         {
             if (con.State != System.Data.ConnectionState.Open)
                 con.Open();
@@ -28,6 +28,11 @@ namespace SMSTransfer.Repositories
             {
                 var areas = await con.QueryAsync<KeyValuePair<string, string>>("SELECT AREA as Key,CITY as Value FROM SMSTELEPHONES GROUP BY AREA,CITY;");
 
+                if (userkey != "")
+                {
+                      var areasAllow = await con.QueryAsync<string>("SELECT PRO.AREAS  FROM SMSUserPermissions PER INNER JOIN SMSProjects PRO ON PER.PROJECTID = PRO.ID  INNER JOIN SMSUsers USER ON USER.ID =PER.USERID  AND  USER.USERKEY = @USERKEY;", new { USERKEY = userkey });
+                    areas = areas.Where(x => areasAllow.SelectMany(y => y.Split(',')).Contains(x.Key));
+                }
                 var result = areas.GroupBy(x => x.Key).ToDictionary(x => x.Key,y=>y.Select(x=>x.Value).ToList());
 
                 this._logger.Debug("获取地区城市信息");
@@ -50,7 +55,7 @@ namespace SMSTransfer.Repositories
                 con.Open();
             try
             {
-                var telephone = await con.QueryFirstOrDefaultAsync<SmsTelephone>("SELECT TEL.* FROM SMSTELEPHONES TEL WHERE NOT EXISTS(SELECT * FROM SMSLogs LOG WHERE  TEL.TELEPHONE =LOG.TELEPHONE AND CREATETIME = @CREATETIME AND USERKEY=@USERKEY) AND AREA=@AREA AND CITY = @CITY LIMIT 1",
+                var telephone = await con.QueryFirstOrDefaultAsync<SmsTelephone>("SELECT TEL.* FROM SMSTELEPHONES TEL WHERE NOT EXISTS(SELECT * FROM SMSLogs LOG WHERE  TEL.TELEPHONE =LOG.TELEPHONE AND CREATETIME = @CREATETIME ) AND AREA=@AREA AND CITY = @CITY LIMIT 1",
                 new
                 {
                     USERKEY = userKey,

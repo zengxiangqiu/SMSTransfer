@@ -10,7 +10,11 @@ namespace SMSTransfer.Models
     {
         public int Id { get; set; }
         public string UserKey { get; set; }
-        public int LimitedQty { get; set; }
-        public int Status { get; set; }
+        public string UserName { get; set; }
+        public string ProjectId { get; set; } = "";
+        public int Points { get; set; }
+        public bool Status { get; set; } = true;
+        public DateTime CreateTime { get; set; }
+        public DateTime LastModTime { get; set; }
     }
 }

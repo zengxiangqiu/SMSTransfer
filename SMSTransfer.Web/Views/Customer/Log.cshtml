@@ -1,0 +1,60 @@
+﻿@model SMSTransfer.Web.ViewModels.LogViewModel
+@{
+    ViewBag.Title = "发送记录";
+}
+<h2>发送记录</h2>
+
+<br />
+<div class="row">
+    <div class="table-responsive">
+        <table id="example" class="display" style="width:100%">
+            @if (Model.Logs.Count() == 0)
+            {
+                <tr>
+                    <td colspan="10">No Record's found.</td>
+                </tr>
+            }
+            else
+            {
+                <thead>
+                    <tr>
+                        <th> 用户密钥</th>
+                        <th>发送号码</th>
+                        <th>目标号码</th>
+                        <th>内容</th>
+                        <th>扣点</th>
+                        <th>发送日期</th>
+                        @*<th data-firstsort="desc">Address</th>
+                            <th data-defaultsign="AZ">City</th>
+                            <th data-defaultsort="disabled">Country</th>*@
+                    </tr>
+                </thead>
+                foreach (var item in Model.Logs)
+                {
+                    <tr>
+                        <td>@item.UserKey</td>
+                        <td>@item.Telephone</td>
+                        <td>@item.TargetPhone</td>
+                        <td>@item.Content</td>
+                        <td>@item.Points</td>
+                        <td>@item.LastModTime</td>
+                        @*<td>@item.Address</td>
+                            <td>@item.City</td>
+                            <td>@item.Country</td>*@
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("返回主页", "Index")
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+}

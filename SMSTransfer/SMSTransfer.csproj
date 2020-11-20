@@ -66,7 +66,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\SMSProjects.cs" />
+    <Compile Include="Models\SMSReChargeLog.cs" />
+    <Compile Include="Models\SmsSummary.cs" />
+    <Compile Include="Models\SMSUserPermissions.cs" />
     <Compile Include="Repositories\SmsLogsRepository.cs" />
+    <Compile Include="Repositories\SmsPermisRepository.cs" />
+    <Compile Include="Repositories\SmsProjectsRepository.cs" />
     <Compile Include="Requests\ReloadTelRequest.cs" />
     <Compile Include="Responses\SmsReponse.cs" />
     <Compile Include="Requests\GetTelRequest.cs" />

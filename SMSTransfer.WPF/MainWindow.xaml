@@ -79,7 +79,7 @@
        
             </StackPanel.Resources>
             <TextBlock Text="密钥" VerticalAlignment="Center" Margin="5,0"/>
-            <TextBox  Text="{Binding UserKey}" Width="100" />
+            <TextBox  Text="{Binding UserKey}" Width="100"  KeyUp="TextBox_KeyUp"/>
             <TextBlock Text="地区选择" VerticalAlignment="Center" Margin="5,0"/>
             <ComboBox Width="100" ItemsSource="{Binding Areas}" SelectedItem="{Binding AreaSelected}"  Text="选择地区" IsEditable="True" IsReadOnly="True"/>
             <ComboBox Width="100" Text="选择城市" IsEditable="True" IsReadOnly="True" ItemsSource="{Binding Cities}" SelectedItem="{Binding CitySelected}"/>

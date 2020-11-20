@@ -11,9 +11,11 @@ namespace SMSTransfer.Models
         public int Id { get; set; }
         public string UserKey { get; set; }
         public string Telephone { get; set; }
-        public int CountOfSent { get; set; }
+        public string TargetPhone { get; set; }
+        public string Content { get; set; }
+        public string Remark { get; set; }
+        public int Points { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime LastModTime { get; set; }
-        
     }
 }
